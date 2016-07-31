@@ -36,6 +36,14 @@ deploy:
     docker_image: framgia/simple-html-cd-demo:latest
     when:
       branch: [master, release]
+notify:
+  email:
+    from: $$EMAIL_FROM
+    host: $$EMAIL_HOST
+    username: $$EMAIL_USERNAME
+    password: $$EMAIL_PASSWORD
+    recipients:
+      - $$EMAIL_RECIPIENTS
 cache:
   mount:
     - /drone/docker
