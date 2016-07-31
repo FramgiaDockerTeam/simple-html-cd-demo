@@ -1,8 +1,6 @@
 publish:
   docker:
     storage_path: /drone/docker
-    environment:
-      - DOCKER_LAUNCH_DEBUG=true
     when:
       branch: develop
     username: $$DOCKER_USERNAME
@@ -13,8 +11,6 @@ publish:
     tag: staging
   docker:
     storage_path: /drone/docker
-    environment:
-      - DOCKER_LAUNCH_DEBUG=true
     when:
       branch: [master, release]
     username: $$DOCKER_USERNAME
@@ -23,6 +19,23 @@ publish:
     repo: framgia/simple-html-cd-demo
     file: Dockerfile.production
     tag: latest
+deploy:
+  rancher:
+    url: $$RANCHER_URL
+    access_key: $$RANCHER_ACCESS_KEY
+    secret_key: $$RANCHER_SECRET_KEY
+    service: $$RANCHER_SERVICE_STAGING
+    docker_image: framgia/simple-html-cd-demo:staging
+    when:
+      branch: develop
+  rancher:
+    url: $$RANCHER_URL
+    access_key: $$RANCHER_ACCESS_KEY
+    secret_key: $$RANCHER_SECRET_KEY
+    service: $$RANCHER_SERVICE_PRODUCTION
+    docker_image: framgia/simple-html-cd-demo:latest
+    when:
+      branch: [master, release]
 cache:
   mount:
     - /drone/docker
