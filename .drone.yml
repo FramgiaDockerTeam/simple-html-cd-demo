@@ -26,6 +26,7 @@ deploy:
     secret_key: $$RANCHER_SECRET_KEY
     service: $$RANCHER_SERVICE_STAGING
     docker_image: framgia/simple-html-cd-demo:staging
+    confirm: true
     when:
       branch: develop
   rancher:
@@ -34,6 +35,7 @@ deploy:
     secret_key: $$RANCHER_SECRET_KEY
     service: $$RANCHER_SERVICE_PRODUCTION
     docker_image: framgia/simple-html-cd-demo:latest
+    confirm: true
     when:
       branch: [master, release]
 notify:
