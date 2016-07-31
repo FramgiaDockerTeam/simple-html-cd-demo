@@ -1,0 +1,28 @@
+publish:
+  docker:
+    storage_path: /drone/docker
+    environment:
+      - DOCKER_LAUNCH_DEBUG=true
+    when:
+      branch: develop
+    username: $$DOCKER_USERNAME
+    password: $$DOCKER_PASSWORD
+    email: $$DOCKER_EMAIL
+    repo: framgia/simple-html-cd-demo
+    file: Dockerfile.staging
+    tag: staging
+  docker:
+    storage_path: /drone/docker
+    environment:
+      - DOCKER_LAUNCH_DEBUG=true
+    when:
+      branch: [master, release]
+    username: $$DOCKER_USERNAME
+    password: $$DOCKER_PASSWORD
+    email: $$DOCKER_EMAIL
+    repo: framgia/simple-html-cd-demo
+    file: Dockerfile.production
+    tag: latest
+cache:
+  mount:
+    - /drone/docker
